@@ -70,7 +70,7 @@ properly. This should ideally be placed in `manifests/site.pp`:
 
 #### Enable remote connections from anywhere
 
-(Beware that this isn't save as really anybody can connect to the server with this setting.)
+(Beware that this isn't safe as really anybody can connect to the server with this setting.)
 
 Tell the server to listen on all interfaces (the nested quotes are important, the resulting value must be '*'):
 
