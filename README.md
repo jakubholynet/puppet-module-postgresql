@@ -56,6 +56,8 @@ the owner does not exist it is created:
       owner => "bloguser",
     }
 
+You can than connect to it with `psql -U bloguser blog` (password not required).
+
 Note that you'll need to define a global search path for the `exec`
 resource to make the `postgresql::database` resource function
 properly. This should ideally be placed in `manifests/site.pp`:
@@ -63,3 +65,20 @@ properly. This should ideally be placed in `manifests/site.pp`:
     Exec {
       path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     }
+
+### Tips
+
+#### Enable remote connections from anywhere
+
+(Beware that this isn't save as really anybody can connect to the server with this setting.)
+
+Tell the server to listen on all interfaces (the nested quotes are important, the resulting value must be '*'):
+
+    class { "postgresql::server": version => "8.4",
+                        listen_addresses => "'*'",
+                        ...
+    }
+
+Modify the configuration to allow all hosts - to `postgresql/files/pg_hba.conf` add:
+
+    host    all         all         0.0.0.0 0.0.0.0       trust
